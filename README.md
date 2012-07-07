@@ -1,4 +1,4 @@
-capybara-discoball
+`capybara_discoball`
 ==================
 
 Spin up a rack app just for Capybara.
@@ -13,7 +13,7 @@ Synopsis
 
     # Use Sinatra, for example
     require 'sinatra/base'
-    require 'capybara-discoball'
+    require 'capybara_discoball'
 
     # Define a quick Rake app
     class FakeMusicDB < Sinatra::Base
@@ -40,7 +40,7 @@ More details
 You can instantiate a `Capybara::Discoball`, passing in a factory which
 will create a Rack app:
 
-    FakeMusicDBRunner = Capybara::Discoball.new(FakeMusicDB)
+    FakeMusicDBRunner = Capybara::Discoball::Runner.new(FakeMusicDB)
 
 This gives you back a runner, which you can boot from your features,
 specs, tests, console, whatever:
@@ -57,7 +57,7 @@ API. We provide a way to access that URL; in fact, we offer the whole
 some `MusicDB` library in the code that knows to hit the
 `.endpoint_url`:
 
-    FakeMusicDBRunner = Capybara::Discoball.new(FakeMusicDB) do |server|
+    FakeMusicDBRunner = Capybara::Discoball::Runner.new(FakeMusicDB) do |server|
       MusicDB.endpoint_url = server.url('/')
     end
 
