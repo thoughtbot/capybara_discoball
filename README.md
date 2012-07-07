@@ -15,7 +15,7 @@ Synopsis
     require 'sinatra/base'
     require 'capybara_discoball'
 
-    # Define a quick Rake app
+    # Define a quick Rack app
     class FakeMusicDB < Sinatra::Base
       cattr_reader :albums
 
@@ -37,8 +37,8 @@ Synopsis
 More details
 ------------
 
-You can instantiate a `Capybara::Discoball`, passing in a factory which
-will create a Rack app:
+You can instantiate a `Capybara::Discoball::Runner`, passing in a
+factory which will create a Rack app:
 
     FakeMusicDBRunner = Capybara::Discoball::Runner.new(FakeMusicDB)
 
@@ -70,21 +70,15 @@ are two tricky cases:
 *When the third-party library does not have hooks to set the endpoint
 URL*.
 
-This is a two-step process:
-
-1. Open the class and add the hooks yourself. This requires
-understanding the source of the library. Here's an example where the
-library uses `@@endpoint_url` everywhere to refer to the endpoint URL:
+Open the class and add the hooks yourself. This requires understanding
+the source of the library. Here's an example where the library uses
+`@@endpoint_url` everywhere to refer to the endpoint URL:
 
     class MusicDB
       def self.endpoint_url=(endpoint_url)
         @@endpoint_url = endpoint_url
       end
     end
-
-2. Send a pull request to the third-party library. Write a test, make
-some refactorings, and in general create a solid open source
-contribution. We love that stuff.
 
 *When your JavaScript needs to talk to the endpoint URL*.
 
