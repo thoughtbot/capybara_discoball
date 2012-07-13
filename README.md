@@ -49,7 +49,7 @@ specs, tests, console, whatever:
 
 These two steps can be merged with the `spin` class method:
 
-    Capybara::Discoball.spin(FakeMusicDBRunner)
+    Capybara::Discoball.spin(FakeMusicDB)
 
 It is always the case that you need to know the URL for the external
 API. We provide a way to access that URL; in fact, we offer the whole
