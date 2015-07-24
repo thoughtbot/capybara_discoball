@@ -40,7 +40,9 @@ More details
 You can instantiate a `Capybara::Discoball::Runner`, passing in a
 factory which will create a Rack app:
 
-    FakeMusicDBRunner = Capybara::Discoball::Runner.new(FakeMusicDB)
+    FakeMusicDBRunner = Capybara::Discoball::Runner.new(FakeMusicDB) do
+      # tests to perform after server boot
+    end
 
 This gives you back a runner, which you can boot from your features,
 specs, tests, console, whatever:
@@ -49,7 +51,9 @@ specs, tests, console, whatever:
 
 These two steps can be merged with the `spin` class method:
 
-    Capybara::Discoball.spin(FakeMusicDB)
+    Capybara::Discoball.spin(FakeMusicDB) do
+      # tests to perform while server is spinning
+    end
 
 It is always the case that you need to know the URL for the external
 API. We provide a way to access that URL; in fact, we offer the whole
@@ -58,7 +62,7 @@ some `MusicDB` library in the code that knows to hit the
 `.endpoint_url`:
 
     FakeMusicDBRunner = Capybara::Discoball::Runner.new(FakeMusicDB) do |server|
-      MusicDB.endpoint_url = server.url('/')
+      MusicDB.endpoint_url = "http://#{server.host}:#{server.port}/"
     end
 
 Integrating into your app
