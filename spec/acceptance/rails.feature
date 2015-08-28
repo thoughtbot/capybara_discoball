@@ -24,7 +24,7 @@ Feature: Rails
     end
 
     Capybara::Discoball.spin(FakeSuccess) do |server|
-      SuccessAPI.endpoint_url = server.url('/')
+      SuccessAPI.endpoint_url = "http://#{server.host}:#{server.port}"
     end
     """
     Then the integration spec should pass
