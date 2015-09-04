@@ -1,7 +1,7 @@
 capybara_discoball
 ==================
 
-[![Build Status](https://travis-ci.org/thoughtbot/capybara_discoball.svg)](https://travis-ci.org/thoughtbot/capybara_discoball)
+[![Build Status](https://travis-ci.org/thoughtbot/capybara_discoball.svg?branch=master)](https://travis-ci.org/thoughtbot/capybara_discoball)
 
 Spin up a rack app just for Capybara.
 
