@@ -2,6 +2,7 @@ step %{I have a Rails application with Discoball installed} do
   create_rails_app
   append_to_file("Gemfile", <<-GEMS)
     gem 'rspec-rails'
+    gem 'capybara'
   GEMS
   run_simple "bundle exec rails generate rspec:install"
 end
@@ -16,16 +17,18 @@ step %{the following controller action:} do |action_content|
   CONTROLLER
   write_file("config/routes.rb", <<-ROUTES)
     Testapp::Application.routes.draw do
-      match '/successes', :to => 'whatever#the_action'
+      get '/successes', :to => 'whatever#the_action'
     end
   ROUTES
 end
 
 step %{the following integration spec:} do |spec_content|
   write_file("spec/integration/whatever_spec.rb", <<-SPEC)
-    require 'spec_helper'
+    require 'rails_helper'
+    require 'capybara/rspec'
+    require 'support/whatever'
 
-    describe "whatever", :integration => true do
+    RSpec.describe "whatever", :type => :feature do
       it "does the thing" do
         #{spec_content}
       end
@@ -44,7 +47,7 @@ step %{the integration spec should pass} do
 end
 
 step %{the SuccessAPI is installed} do
-  write_file('lib/success_api.rb', <<-SUCCESS_API)
+  write_file('app/models/success_api.rb', <<-SUCCESS_API)
     require 'net/http'
     require 'uri'
 
