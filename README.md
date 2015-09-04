@@ -73,8 +73,14 @@ some `MusicDB` library in the code that knows to hit the
 
 ```ruby
 FakeMusicDBRunner = Capybara::Discoball::Runner.new(FakeMusicDB) do |server|
-  MusicDB.endpoint_url = "http://#{server.host}:#{server.port}/"
+  MusicDB.endpoint_url = server.url
 end
+```
+
+If no block is provided, the URL is also returned by `#spin`:
+
+```ruby
+MusicDB.endpoint_url = Capybara::Discoball.spin(FakeMusicDB)
 ```
 
 Integrating into your app

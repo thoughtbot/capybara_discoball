@@ -1,5 +1,6 @@
-require 'capybara_discoball/version'
-require 'capybara_discoball/runner'
+require "capybara_discoball/version"
+require "capybara_discoball/server"
+require "capybara_discoball/runner"
 
 module Capybara
   module Discoball
