@@ -42,8 +42,8 @@ end
 
 step %{the integration spec should pass} do
   run_simple("bundle exec rspec spec/integration", false)
-  assert_exit_status(0)
-  assert_partial_output("0 failures", all_output)
+  expect(last_command_started).to have_output(/1 example, 0 failures/)
+  expect(last_command_started).to have_exit_status(0)
 end
 
 step %{the SuccessAPI is installed} do
