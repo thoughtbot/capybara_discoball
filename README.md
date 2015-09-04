@@ -1,5 +1,7 @@
-`capybara_discoball`
+capybara_discoball
 ==================
+
+[![Build Status](https://travis-ci.org/thoughtbot/capybara_discoball.svg)](https://travis-ci.org/thoughtbot/capybara_discoball)
 
 Spin up a rack app just for Capybara.
 
@@ -11,28 +13,30 @@ talk with an API.
 Synopsis
 --------
 
-    # Use Sinatra, for example
-    require 'sinatra/base'
-    require 'capybara_discoball'
+```ruby
+# Use Sinatra, for example
+require 'sinatra/base'
+require 'capybara_discoball'
 
-    # Define a quick Rack app
-    class FakeMusicDB < Sinatra::Base
-      cattr_reader :albums
+# Define a quick Rack app
+class FakeMusicDB < Sinatra::Base
+  cattr_reader :albums
 
-      get '/musicians/:musician/albums' do |musician|
-        <<-XML
-        <albums for="#{musician}">
-          #{@albums.map { |album| "<album>#{album}</album>" }.join}
-        </albums>
-        XML
-      end
-    end
+  get '/musicians/:musician/albums' do |musician|
+    <<-XML
+    <albums for="#{musician}">
+      #{@albums.map { |album| "<album>#{album}</album>" }.join}
+    </albums>
+    XML
+  end
+end
 
-    # Spin up the Rack app, then update the imaginary library we're
-    # using to point to the new URL.
-    Capybara::Discoball.spin(FakeMusicDB) do |server|
-      MusicDB.endpoint_url = server.url('/')
-    end
+# Spin up the Rack app, then update the imaginary library we're
+# using to point to the new URL.
+Capybara::Discoball.spin(FakeMusicDB) do |server|
+  MusicDB.endpoint_url = server.url('/')
+end
+```
 
 More details
 ------------
@@ -40,20 +44,26 @@ More details
 You can instantiate a `Capybara::Discoball::Runner`, passing in a
 factory which will create a Rack app:
 
-    FakeMusicDBRunner = Capybara::Discoball::Runner.new(FakeMusicDB) do
-      # tests to perform after server boot
-    end
+```ruby
+FakeMusicDBRunner = Capybara::Discoball::Runner.new(FakeMusicDB) do
+  # tests to perform after server boot
+end
+```
 
 This gives you back a runner, which you can boot from your features,
 specs, tests, console, whatever:
 
-    FakeMusicDBRunner.boot
+```ruby
+FakeMusicDBRunner.boot
+```
 
 These two steps can be merged with the `spin` class method:
 
-    Capybara::Discoball.spin(FakeMusicDB) do
-      # tests to perform while server is spinning
-    end
+```ruby
+Capybara::Discoball.spin(FakeMusicDB) do
+  # tests to perform while server is spinning
+end
+```
 
 It is always the case that you need to know the URL for the external
 API. We provide a way to access that URL; in fact, we offer the whole
@@ -61,9 +71,11 @@ API. We provide a way to access that URL; in fact, we offer the whole
 some `MusicDB` library in the code that knows to hit the
 `.endpoint_url`:
 
-    FakeMusicDBRunner = Capybara::Discoball::Runner.new(FakeMusicDB) do |server|
-      MusicDB.endpoint_url = "http://#{server.host}:#{server.port}/"
-    end
+```ruby
+FakeMusicDBRunner = Capybara::Discoball::Runner.new(FakeMusicDB) do |server|
+  MusicDB.endpoint_url = "http://#{server.host}:#{server.port}/"
+end
+```
 
 Integrating into your app
 -------------------------
@@ -78,28 +90,32 @@ Open the class and add the hooks yourself. This requires understanding
 the source of the library. Here's an example where the library uses
 `@@endpoint_url` everywhere to refer to the endpoint URL:
 
-    class MusicDB
-      def self.endpoint_url=(endpoint_url)
-        @@endpoint_url = endpoint_url
-      end
-    end
+```ruby
+class MusicDB
+  def self.endpoint_url=(endpoint_url)
+    @@endpoint_url = endpoint_url
+  end
+end
+```
 
 *When your JavaScript needs to talk to the endpoint URL*.
 
 For this you must thread the URL through your app so that the JavaScript
 can find it:
 
-    <% content_for :javascript do %>
-      <% javascript_tag do %>
-        albumShower = new AlbumShower(<%= MusicDB.endpoint_url.to_json %>);
-        albumShower.show();
-      <% end %>
-    <% end %>
+```ruby
+<% content_for :javascript do %>
+  <% javascript_tag do %>
+    albumShower = new AlbumShower(<%= MusicDB.endpoint_url.to_json %>);
+    albumShower.show();
+  <% end %>
+<% end %>
 
-    class @AlbumShower
-      constructor: (@endpointUrl) ->
-      show: ->
-        $.get(@endpointUrl, (data) -> $('#albums').html(data))
+class @AlbumShower
+  constructor: (@endpointUrl) ->
+  show: ->
+    $.get(@endpointUrl, (data) -> $('#albums').html(data))
+```
 
 Contributing
 ------------
