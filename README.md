@@ -2,6 +2,7 @@ capybara_discoball
 ==================
 
 [![Build Status](https://travis-ci.org/thoughtbot/capybara_discoball.svg?branch=master)](https://travis-ci.org/thoughtbot/capybara_discoball)
+[![Code Climate](https://codeclimate.com/github/thoughtbot/capybara_discoball/badges/gpa.svg)](https://codeclimate.com/github/thoughtbot/capybara_discoball)
 
 Spin up a rack app just for Capybara.
 
@@ -126,16 +127,30 @@ class @AlbumShower
 Contributing
 ------------
 
-We love pull requests.
+See the [CONTRIBUTING] document. Thank you, [contributors]!
 
-1. Fork the repo.
-2. Make a feature branch.
-3. Write tests.
-4. Implement the feature/bugfix.
-5. Rebase and squash.
-6. Submit the pull request.
+[CONTRIBUTING]: /CONTRIBUTING.md
+[contributors]: https://github.com/thoughtbot/capybara_discoball/graphs/contributors
 
 License
 -------
 
-Copyright 2012 thoughtbot. Released under the same license as Ruby.
+capybara_discoball is Copyright (c) 2012-2015 thoughtbot, inc. It is free software,
+and may be redistributed under the terms specified in the [LICENSE] file.
+
+[LICENSE]: /LICENSE
+
+About
+-----
+
+![thoughtbot](https://thoughtbot.com/logo.png)
+
+capybara_discoball is maintained and funded by thoughtbot, inc.
+The names and logos for thoughtbot are trademarks of thoughtbot, inc.
+
+We love open source software!
+See [our other projects][community]
+or [hire us][hire] to help build your product.
+
+[community]: https://thoughtbot.com/community?utm_source=github
+[hire]: https://thoughtbot.com/hire-us?utm_source=github
