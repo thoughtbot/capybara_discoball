@@ -11,7 +11,7 @@ Feature: Rails
     """
     And the following controller action:
     """
-    render :text => SuccessAPI.get
+    render :plain => SuccessAPI.get
     """
     And the following spec supporter:
     """
@@ -40,7 +40,7 @@ Feature: Rails
     """
     And the following controller action:
     """
-    render :text => SuccessAPI.get
+    render :plain => SuccessAPI.get
     """
     And the following spec supporter:
     """
