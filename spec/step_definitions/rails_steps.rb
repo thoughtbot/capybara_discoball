@@ -2,7 +2,6 @@ step %{I have a Rails application with Discoball installed} do
   create_rails_app
   append_to_file("Gemfile", <<-GEMS)
     gem 'rspec-rails'
-    gem 'capybara'
   GEMS
   run_simple "bundle exec rails generate rspec:install"
 end
