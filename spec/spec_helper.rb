@@ -1,21 +1,16 @@
-require 'rspec'
-require 'turnip'
-require 'aruba/api'
-Dir["spec/{support,step_definitions}/**/*.rb"].each { |f| require File.expand_path(f) }
-
 RSpec.configure do |config|
-  config.include Aruba::Api
-  config.include RailsSupport
-
-  config.before(:all) do
-    @aruba_timeout_seconds = 140
-    if ENV['DEBUG']
-      @puts = true
-      @announce_stdout = true
-      @announce_stderr = true
-      @announce_cmd = true
-      @announce_dir = true
-      @announce_env = true
-    end
+  config.expect_with :rspec do |expectations|
+    expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end
+
+  config.mock_with :rspec do |mocks|
+    mocks.verify_partial_doubles = true
+  end
+
+  config.shared_context_metadata_behavior = :apply_to_host_groups
+  config.disable_monkey_patching!
+  config.warnings = true
+
+  config.order = :random
+  Kernel.srand config.seed
 end

@@ -26,18 +26,6 @@ present the Discoball.
   s.add_dependency 'capybara', '~> 2.7'
 
   s.add_development_dependency 'rspec'
-  s.add_development_dependency 'turnip', '~> 2.1'
-  s.add_development_dependency 'aruba'
-  s.add_development_dependency 'sinatra'
-
-  # Rails dependencies
   s.add_development_dependency 'rails'
-  s.add_development_dependency 'thin'
-  s.add_development_dependency 'uglifier'
-  s.add_development_dependency 'sass-rails'
-  s.add_development_dependency 'coffee-rails'
-  s.add_development_dependency 'jquery-rails'
-  s.add_development_dependency 'rspec-rails'
-  s.add_development_dependency 'sqlite3'
-  s.add_development_dependency 'therubyracer'
+  s.add_development_dependency 'pry'
 end
