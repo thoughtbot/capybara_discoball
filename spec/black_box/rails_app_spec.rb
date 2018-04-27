@@ -2,7 +2,7 @@ require "jet_black"
 
 RSpec.describe "Using Discoball in a Rails app" do
   let(:session) do
-    JetBlack::Session.new(options: { clean_bundler_env: true } )
+    JetBlack::Session.new(options: { clean_bundler_env: true })
   end
 
   it "works with a block" do
