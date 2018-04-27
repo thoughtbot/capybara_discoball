@@ -77,10 +77,10 @@ RSpec.describe "Using Discoball in a Rails app" do
       "--skip-bundle",
       "--skip-test-unit",
       "--skip-coffee",
-      "--skip-turbolinks"
+      "--skip-turbolinks",
     ].join(" ")
 
-    # Use rails from our own bundle
+    # Use Rails from our own bundle
     command = session.run(rails_new_cmd, options: { clean_bundler_env: false })
     expect(command.stdout).to include "create  Gemfile"
   end
@@ -142,7 +142,7 @@ RSpec.describe "Using Discoball in a Rails app" do
       end
     RUBY
 
-    session.create_file("config/routes.rb", <<-RUBY)
+    session.create_file("config/routes.rb", <<~RUBY)
       Rails.application.routes.draw do
         get '/successes', :to => 'whatever#the_action'
       end
@@ -150,7 +150,7 @@ RSpec.describe "Using Discoball in a Rails app" do
   end
 
   def setup_integration_spec(spec_content)
-    session.create_file("spec/integration/whatever_spec.rb", <<-RUBY)
+    session.create_file("spec/integration/whatever_spec.rb", <<~RUBY)
       require 'rails_helper'
       require 'capybara/rspec'
       require 'support/whatever'
