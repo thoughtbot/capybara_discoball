@@ -72,17 +72,27 @@ RSpec.describe "Using Discoball in a Rails app" do
   private
 
   def create_rails_application
+    session.create_file("Gemfile", <<~RUBY)
+      source "http://rubygems.org"
+
+      gem "rails"
+    RUBY
+
+    session.run("bundle install")
+
     rails_new_cmd = [
       "bundle exec rails new .",
       "--skip-bundle",
-      "--skip-test-unit",
+      "--skip-test",
       "--skip-coffee",
       "--skip-turbolinks",
+      "--skip-spring",
+      "--skip-bootsnap",
+      "--force",
     ].join(" ")
 
-    # Use Rails from our own bundle
-    expect(session.run(rails_new_cmd, options: { clean_bundler_env: false })).
-      to be_a_success.and have_stdout("create  Gemfile")
+    expect(session.run(rails_new_cmd)).
+      to be_a_success.and have_stdout("force  Gemfile")
   end
 
   def setup_discoball
