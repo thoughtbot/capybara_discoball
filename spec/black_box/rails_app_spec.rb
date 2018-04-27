@@ -1,7 +1,9 @@
 require "jet_black"
 
 RSpec.describe "Using Discoball in a Rails app" do
-  let(:session) { JetBlack::Session.new(options: { clean_bundler_env: true } ) }
+  let(:session) do
+    JetBlack::Session.new(options: { clean_bundler_env: true } )
+  end
 
   it "works with a block" do
     create_rails_application
@@ -32,9 +34,8 @@ RSpec.describe "Using Discoball in a Rails app" do
       end
     RUBY
 
-    command = run_integration_test
-    expect(command.stdout).to match(/1 example, 0 failures/)
-    expect(command.exit_status).to eq 0
+    expect(run_integration_test).
+      to be_a_success.and have_stdout(/1 example, 0 failures/)
   end
 
   it "works without a block" do
@@ -64,9 +65,8 @@ RSpec.describe "Using Discoball in a Rails app" do
       SuccessAPI.endpoint_url = Capybara::Discoball.spin(FakeSuccess)
     RUBY
 
-    command = run_integration_test
-    expect(command.stdout).to match(/1 example, 0 failures/)
-    expect(command.exit_status).to eq 0
+    expect(run_integration_test).
+      to be_a_success.and have_stdout("1 example, 0 failures")
   end
 
   private
@@ -81,8 +81,8 @@ RSpec.describe "Using Discoball in a Rails app" do
     ].join(" ")
 
     # Use Rails from our own bundle
-    command = session.run(rails_new_cmd, options: { clean_bundler_env: false })
-    expect(command.stdout).to include "create  Gemfile"
+    expect(session.run(rails_new_cmd, options: { clean_bundler_env: false })).
+      to be_a_success.and have_stdout("create  Gemfile")
   end
 
   def setup_discoball
@@ -93,9 +93,8 @@ RSpec.describe "Using Discoball in a Rails app" do
       gem "sinatra"
     RUBY
 
-    command = session.run("bundle install")
-    expect(command.stdout).
-      to match(/Using capybara_discoball .* from source at/)
+    expect(session.run("bundle install")).
+      to be_a_success.and have_stdout(/capybara_discoball .* from source at/)
   end
 
   def setup_rspec_rails
@@ -104,8 +103,9 @@ RSpec.describe "Using Discoball in a Rails app" do
     RUBY
 
     session.run("bundle install")
-    command = session.run("bundle exec rails g rspec:install")
-    expect(command.stdout).to include "create  spec/rails_helper.rb"
+
+    expect(session.run("bundle exec rails g rspec:install")).
+      to be_a_success.and have_stdout("create  spec/rails_helper.rb")
   end
 
   def install_success_api

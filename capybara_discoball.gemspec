@@ -27,6 +27,6 @@ present the Discoball.
 
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'rails'
-  s.add_development_dependency 'jet_black'
+  s.add_development_dependency 'jet_black', '~> 0.2'
   s.add_development_dependency 'pry'
 end
