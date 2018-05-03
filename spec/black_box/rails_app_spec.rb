@@ -12,21 +12,21 @@ RSpec.describe "Using Discoball in a Rails app" do
     install_success_api
 
     setup_controller_action(<<~RUBY)
-      render :plain => SuccessAPI.get
+      render plain: SuccessAPI.get
     RUBY
 
     setup_integration_spec(<<~RUBY)
-      visit '/successes'
-      expect(page).to have_content('success')
+      visit "/successes"
+      expect(page).to have_content("success")
     RUBY
 
     setup_spec_supporter(<<-RUBY)
-      require 'sinatra/base'
-      require 'capybara_discoball'
-      require 'success_api'
+      require "sinatra/base"
+      require "capybara_discoball"
+      require "success_api"
 
       class FakeSuccess < Sinatra::Base
-        get('/') { 'success' }
+        get("/") { "success" }
       end
 
       Capybara::Discoball.spin(FakeSuccess) do |server|
@@ -49,17 +49,17 @@ RSpec.describe "Using Discoball in a Rails app" do
     RUBY
 
     setup_integration_spec(<<~RUBY)
-      visit '/successes'
-      expect(page).to have_content('success')
+      visit "/successes"
+      expect(page).to have_content("success")
     RUBY
 
     setup_spec_supporter(<<-RUBY)
-      require 'sinatra/base'
-      require 'capybara_discoball'
-      require 'success_api'
+      require "sinatra/base"
+      require "capybara_discoball"
+      require "success_api"
 
       class FakeSuccess < Sinatra::Base
-        get('/') { 'success' }
+        get("/") { "success" }
       end
 
       SuccessAPI.endpoint_url = Capybara::Discoball.spin(FakeSuccess)
@@ -99,7 +99,7 @@ RSpec.describe "Using Discoball in a Rails app" do
     discoball_path = File.expand_path("../../", __dir__)
 
     session.append_to_file "Gemfile", <<~RUBY
-      gem "capybara_discoball", :path => "#{discoball_path}"
+      gem "capybara_discoball", path: "#{discoball_path}"
       gem "sinatra"
     RUBY
 
@@ -120,11 +120,11 @@ RSpec.describe "Using Discoball in a Rails app" do
 
   def install_success_api
     session.create_file("app/models/success_api.rb", <<~RUBY)
-      require 'net/http'
-      require 'uri'
+      require "net/http"
+      require "uri"
 
       class SuccessAPI
-        @@endpoint_url = 'http://yahoo.com/'
+        @@endpoint_url = "http://yahoo.com/"
 
         def self.endpoint_url=(endpoint_url)
           @@endpoint_url = endpoint_url
@@ -154,18 +154,18 @@ RSpec.describe "Using Discoball in a Rails app" do
 
     session.create_file("config/routes.rb", <<~RUBY)
       Rails.application.routes.draw do
-        get '/successes', :to => 'whatever#the_action'
+        get "/successes", to: "whatever#the_action"
       end
     RUBY
   end
 
   def setup_integration_spec(spec_content)
     session.create_file("spec/integration/whatever_spec.rb", <<~RUBY)
-      require 'rails_helper'
-      require 'capybara/rspec'
-      require 'support/whatever'
+      require "rails_helper"
+      require "capybara/rspec"
+      require "support/whatever"
 
-      RSpec.describe "whatever", :type => :feature do
+      RSpec.describe "whatever", type: :feature do
         it "does the thing" do
           #{spec_content}
         end
