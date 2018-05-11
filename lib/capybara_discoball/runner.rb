@@ -22,13 +22,10 @@ module Capybara
 
       def with_webrick_runner
         default_server_process = Capybara.server
-        Capybara.register_server :webrick do |app, port|
-          require "rack/handler/webrick"
-          Rack::Handler::WEBrick.run(app, Port: port, AccessLog: [], Logger: WEBrick::Log::new(nil, 0))
-        end
+        Capybara.server = :webrick
         yield
       ensure
-        Capybara.register_server(:default, &default_server_process)
+        Capybara.server = default_server_process
       end
     end
   end

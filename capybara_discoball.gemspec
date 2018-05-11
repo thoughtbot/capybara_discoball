@@ -23,10 +23,12 @@ present the Discoball.
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_dependency 'capybara', '~> 2.7'
+  s.add_dependency 'capybara', '>= 2.7', '< 4'
 
+  s.add_development_dependency 'appraisal'
   s.add_development_dependency 'jet_black', '~> 0.2'
   s.add_development_dependency 'pry'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rspec'
+  s.add_development_dependency 'sinatra'
 end
