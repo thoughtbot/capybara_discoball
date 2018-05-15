@@ -135,7 +135,7 @@ See the [CONTRIBUTING] document. Thank you, [contributors]!
 License
 -------
 
-capybara_discoball is Copyright (c) 2012-2015 thoughtbot, inc. It is free software,
+capybara_discoball is Copyright (c) 2012-2018 thoughtbot, inc. It is free software,
 and may be redistributed under the terms specified in the [LICENSE] file.
 
 [LICENSE]: /LICENSE
