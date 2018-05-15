@@ -1,6 +1,6 @@
 # Changelog
 
-## Pending release
+## v0.1.0
 
 - Runner retries finding an unused port [#15]
 
