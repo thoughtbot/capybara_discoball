@@ -1,8 +1,11 @@
 require "capybara"
+require_relative "retryable"
 
 module Capybara
   module Discoball
     class Runner
+      include Capybara::Discoball::Retryable
+
       RETRY_COUNT = 3
 
       def initialize(server_factory, &block)
@@ -22,26 +25,11 @@ module Capybara
 
       private
 
-      def with_webrick_runner(&block)
-        with_retries(RETRY_COUNT) { launch_webrick(&block) }
-      end
-
-      def with_retries(retry_count)
-        yield
-      rescue Errno::EADDRINUSE => e
-        if retry_count > 0
-          retry_count -= 1
-          puts e.inspect if ENV.key?("DEBUG")
-          retry
-        else
-          raise
-        end
-      end
-
-      def launch_webrick
+      def with_webrick_runner
         default_server_process = Capybara.server
         Capybara.server = :webrick
-        yield
+
+        with_retries(RETRY_COUNT, Errno::EADDRINUSE) { yield }
       ensure
         Capybara.server = default_server_process
       end
