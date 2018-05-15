@@ -35,7 +35,7 @@ end
 # Spin up the Rack app, then update the imaginary library we're
 # using to point to the new URL.
 Capybara::Discoball.spin(FakeMusicDB) do |server|
-  MusicDB.endpoint_url = server.url('/')
+  MusicDB.endpoint_url = server.url
 end
 ```
 
