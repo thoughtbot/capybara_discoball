@@ -31,7 +31,7 @@ module Capybara
       rescue Errno::EADDRINUSE => e
         if retry_count > 0
           retry_count -= 1
-          puts e.inspect
+          puts e.inspect if ENV.key?("DEBUG")
           retry
         else
           raise
